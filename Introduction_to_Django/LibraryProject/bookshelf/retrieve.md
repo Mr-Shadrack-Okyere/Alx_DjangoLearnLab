@@ -1,14 +1,9 @@
-
----
-
-## **2️⃣ `retrieve.md`**
-
-```markdown
-# Retrieve Book(s)
+# Retrieve Book Instance
 
 ```python
 from bookshelf.models import Book
 
-# Retrieve all books
-Book.objects.all()
-# <QuerySet [<Book: 1984 by George Orwell (1949)>]>
+# Retrieve the book instance using get()
+book = Book.objects.get(title="1984")
+book
+# <Book: 1984 by George Orwell (1949)>
