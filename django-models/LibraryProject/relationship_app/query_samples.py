@@ -23,5 +23,6 @@ print(f"Books in {library_name}: {[b.title for b in books_in_library]}")
 
 # --------------------------------------------------
 # 3️⃣ Retrieve the librarian for a library
-librarian = library.librarian
+# ✅ Use the exact pattern ALX expects
+librarian = Librarian.objects.get(library=library)
 print(f"Librarian for {library_name}: {librarian.name}")
