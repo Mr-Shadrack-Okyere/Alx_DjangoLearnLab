@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import user_passes_test, login_required
+from django.shortcuts import render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm  # ⚠ Must import UserCreationForm
 from django.views.generic import DetailView
