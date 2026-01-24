@@ -1,1 +1,16 @@
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
 
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    # Include extra fields in admin
+    fieldsets = UserAdmin.fieldsets + (
+        ('Extra Fields', {'fields': ('date_of_birth', 'profile_photo')}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Extra Fields', {'fields': ('date_of_birth', 'profile_photo')}),
+    )
+    list_display = ['username', 'email', 'is_staff', 'date_of_birth']
+
+admin.site.register(CustomUser, CustomUserAdmin)
