@@ -30,3 +30,7 @@ SECURE_SSL_REDIRECT = True  # Redirect all HTTP to HTTPS
 # Media settings (if using profile photos)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Tell Django to trust the X-Forwarded-Proto header from the proxy
+# This is needed when running behind a reverse proxy (e.g., Nginx, Heroku)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
