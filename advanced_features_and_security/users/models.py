@@ -2,8 +2,6 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 class CustomUserManager(BaseUserManager):
-    """Custom user manager."""
-
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Email is required')
@@ -25,12 +23,9 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
-
 class CustomUser(AbstractUser):
-    """Custom user with additional fields."""
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
-
     objects = CustomUserManager()
 
     def __str__(self):
