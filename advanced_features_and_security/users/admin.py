@@ -4,7 +4,6 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    # Include extra fields in admin
     fieldsets = UserAdmin.fieldsets + (
         ('Extra Fields', {'fields': ('date_of_birth', 'profile_photo')}),
     )
