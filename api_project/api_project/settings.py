@@ -19,3 +19,10 @@ INSTALLED_APPS = [
     'rest_framework',  # for DRF
     'api',             # your app
 ]
+
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'rest_framework.authtoken',  # <-- add this
+    'api',
+]
