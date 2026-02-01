@@ -13,3 +13,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',  # <-- add this
 ]
+
+INSTALLED_APPS = [
+    # default apps...
+    'rest_framework',  # for DRF
+    'api',             # your app
+]
