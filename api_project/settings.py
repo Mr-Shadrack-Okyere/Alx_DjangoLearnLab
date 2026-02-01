@@ -7,3 +7,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # <-- add this
 ]
+
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'api',  # <-- add this
+]
