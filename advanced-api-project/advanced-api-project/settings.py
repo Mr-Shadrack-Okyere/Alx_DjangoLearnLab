@@ -6,6 +6,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',  # ✅ DRF
+    'rest_framework',  # ✅ DRF installed
     'api',             # ✅ Your app
 ]
