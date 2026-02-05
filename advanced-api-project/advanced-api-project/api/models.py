@@ -6,7 +6,7 @@ class Author(models.Model):
     """
     Model representing an author.
     Fields:
-        - name: The full name of the author
+        - name: Full name of the author
     Relationships:
         - One author can have many books (related_name='books')
     """
@@ -21,8 +21,8 @@ class Book(models.Model):
     Model representing a book.
     Fields:
         - title: Title of the book
-        - publication_year: Year of publication
-        - author: ForeignKey to Author (one-to-many)
+        - publication_year: Year the book was published
+        - author: ForeignKey linking to Author model (one-to-many)
     """
     title = models.CharField(max_length=200)
     publication_year = models.IntegerField()
@@ -33,7 +33,7 @@ class Book(models.Model):
 
     def clean(self):
         """
-        Ensure publication_year is not in the future.
+        Validation to ensure publication_year is not in the future
         """
         if self.publication_year > date.today().year:
             raise ValidationError("Publication year cannot be in the future")
