@@ -1,3 +1,4 @@
+# advanced_api_project/settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -5,8 +6,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',   # Add DRF
-    'api',              # Add your API app
+    'rest_framework',  # Add this line
+    'api',             # Your API app
 ]
-
-# Use default SQLite DB (no changes needed unless you want another DB)
