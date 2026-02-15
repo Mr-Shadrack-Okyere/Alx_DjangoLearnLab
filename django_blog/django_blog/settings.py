@@ -28,3 +28,8 @@ STATICFILES_DIRS = [
 
 # If you want to collect static files for production
 STATIC_ROOT = BASE_DIR / "staticfiles"
+INSTALLED_APPS = [
+    ...
+    'blog',
+    'taggit',
+]
