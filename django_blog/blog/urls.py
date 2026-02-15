@@ -86,3 +86,6 @@ urlpatterns += [
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
 ]
 from .views import PostByTagListView
+urlpatterns += [
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
+]
