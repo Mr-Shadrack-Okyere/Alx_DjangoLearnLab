@@ -21,6 +21,16 @@ DATABASES = {
 
 }
 
+# URL prefix for static files
+STATIC_URL = '/static/'
+
+# Static files location in your project
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # optional if you have project-level static files
+]
+
+# If you want to collect static files for production
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
