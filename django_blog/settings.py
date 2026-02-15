@@ -61,3 +61,8 @@ TEMPLATES = [
         },
     },
 ]
+INSTALLED_APPS = [
+    ...
+    'blog',
+    'taggit',
+]
