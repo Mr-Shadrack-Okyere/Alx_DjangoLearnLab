@@ -69,3 +69,60 @@ def register(request):
 @login_required
 def profile(request):
     return render(request, 'blog/profile.html')
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Post, Comment
+from .forms import CommentForm
+
+# Add a comment to a post
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            messages.success(request, 'Comment added!')
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/comment_form.html', {'form': form})
+
+# Edit a comment
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.author:
+        messages.error(request, 'You are not allowed to edit this comment.')
+        return redirect('post-detail', pk=comment.post.pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Comment updated!')
+            return redirect('post-detail', pk=comment.post.pk)
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'blog/comment_form.html', {'form': form})
+
+# Delete a comment
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.author:
+        messages.error(request, 'You are not allowed to delete this comment.')
+        return redirect('post-detail', pk=comment.post.pk)
+
+    if request.method == 'POST':
+        post_id = comment.post.pk
+        comment.delete()
+        messages.success(request, 'Comment deleted!')
+        return redirect('post-detail', pk=post_id)
+    return render(request, 'blog/comment_confirm_delete.html', {'comment': comment})
+
