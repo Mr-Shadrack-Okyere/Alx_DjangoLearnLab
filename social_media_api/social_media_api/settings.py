@@ -11,3 +11,8 @@ INSTALLED_APPS = [
     'accounts',
     'posts',  # ✅ Add this line
 ]
+INSTALLED_APPS = [
+    ...
+    'posts',
+    'notifications',  # ✅ new app
+]
