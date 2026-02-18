@@ -68,3 +68,49 @@ class FeedView(generics.ListAPIView):
         following_users = self.request.user.following.all()
         # ✅ Use the exact pattern the check requires
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.contrib.contenttypes.models import ContentType
+from notifications.models import Notification
+from .models import Post, Like
+from .serializers import LikeSerializer
+
+class LikePostView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        like, created = Like.objects.get_or_create(post=post, user=request.user)
+        if not created:
+            return Response({'detail': 'You have already liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create notification
+        if post.author != request.user:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb='liked your post',
+                content_type=ContentType.objects.get_for_model(post),
+                object_id=post.id
+            )
+
+        serializer = LikeSerializer(like)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class UnlikePostView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            like = Like.objects.get(post_id=pk, user=request.user)
+        except Like.DoesNotExist:
+            return Response({'detail': 'You have not liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        like.delete()
+        return Response({'detail': 'Post unliked successfully.'}, status=status.HTTP_200_OK)
